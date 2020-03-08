@@ -3,26 +3,30 @@ const char TABLESIZE = 10;
 struct word{
     struct word* ptr;
     char *str;
-    char len;
+    int place;
 };
 
-struct word* CreateTable ()
+struct word* Create_Table ()
 {
-    struct word* table = (char*) calloc(TABLESIZE, sizeof(struct word));
+    struct word* table = (struct word *) calloc(TABLESIZE, sizeof(struct word));
+
     for (int i = 0; i < TABLESIZE; i++)
     {
         table[i].ptr = NULL;
         table[i].str = NULL;
     }
+
     return table;
 }
 
-AddTable (struct word* table, int key, char *str)
+void Add_Table (struct word* table, int key, char *str, int place)
 {
-    struct word* new = (struct table*) calloc (1, sizeof(struct word));
+    struct word* new = (struct word*) calloc (1, sizeof(struct word));
     new->ptr = table[key].ptr;
     table[key].ptr = new;
     new->str = str;
+    new->place = place;
+    return;
 }
 
 struct word* Find (struct word* table, int key){
@@ -30,5 +34,16 @@ struct word* Find (struct word* table, int key){
 }
 
 void Destroy_Table (struct word* table){
-
+    int i = 0;
+    struct word *ptr, *next;
+    for (i = 0; i < TABLESIZE; i += 1) {
+        ptr = table[i].ptr;
+        while (ptr) {
+            next = ptr->ptr;
+            free(ptr);
+            ptr = next;
+        }
+        free(&table[i]);
+    }
+    return;
 }
