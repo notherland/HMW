@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "hash_map.c"
+#include "hash_map.h"
 #include <assert.h>
 
 const char MAXWORDLEN  = 250;
